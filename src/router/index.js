@@ -2,13 +2,14 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import home from "../views/index.vue";
 import tenant from "../views/tenant/TenantView.vue";
+import projects from "../views/ProjectsView.vue"
 const routes = [
   {
     path: "/",
     name: "home",
     component: home,
   },
-  // tenants 
+  // tenants
   {
     path: "/tenant",
     name: "tenant",
@@ -16,6 +17,12 @@ const routes = [
     meta: {
       title: "Tenant",
     },
+  },
+  // projects
+  {
+    path: "/projects",
+    name: "projects",
+    component: projects,
   },
 ];
 const router = createRouter({

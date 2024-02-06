@@ -1,7 +1,7 @@
 <template>
   <section id="table-layout">
     <!-- top section  -->
-    <div class="flex pb-5 head-section">
+    <!-- <div class="flex pb-5 head-section">
       <div class="title">
         <h2 class="text-3xl font-bold">Tenants</h2>
       </div>
@@ -10,7 +10,7 @@
         <img src="/src/assets/imgs/bars.svg" alt="" />
         <span class="ml-3 font-semibold text">Main Table</span>
       </div>
-    </div>
+    </div> -->
 
     <!-- filters  -->
     <div class="flex items-center justify-between pt-5 filter-section">
@@ -91,12 +91,14 @@
             </defs>
           </svg>
         </div>
-      </div>
 
-      <div class="add-new">
-        <n-button class="rounded-md">
-          <span>+</span> <span class="ml-2">Add New</span>
-        </n-button>
+        <div class="ml-14 remove-selected">
+          <!-- remove selected  -->
+          <n-button class="rounded-md">
+            <span><i class="fa-regular fa-trash-can"></i></span>
+            <span class="ml-2">Delete Selected</span>
+          </n-button>
+        </div>
       </div>
     </div>
   </section>
@@ -127,7 +129,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .n-button .n-button__content,
 .n-input__placeholder {
   display: flex;
@@ -145,6 +147,7 @@ export default {
 <style lang="scss" scoped>
 .filter {
   width: 100px;
+  transition: 0.3s all;
   .custom-icon {
     position: absolute;
     left: 10px;
@@ -160,8 +163,12 @@ export default {
     top: 15px;
   }
 }
+
+.filter:has(.n-input__input-el:focus) {
+  width: 200px;
+}
 .filter-section {
-  .add-new {
+  .remove-selected {
     button {
       background-color: #3a8352;
       border-radius: 10px !important;

@@ -188,7 +188,7 @@ const menuOptions = [
     label: () =>
       h(
         RouterLink,
-        { to: { name: "home", params: { lang: "en-US" } }, class: "flex" },
+        { to: { name: "projects", params: { lang: "en-US" } }, class: "flex" },
         [
           h("img", {
             src: "/src/assets/imgs/apps-add.svg",
@@ -234,5 +234,15 @@ export default defineComponent({
   color: #6b7a99 !important;
   font-weight: 700;
   font-size: 14px !important;
+}
+.n-menu-item-content-header img.active {
+  width: 24px !important;
+  height: 24px !important;
+}
+.n-menu .n-menu-item-content .n-menu-item-content__arrow.active {
+  display: none !important;
+}
+.nav-item.active {
+  display: none;
 }
 </style>
