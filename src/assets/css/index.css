@@ -248,3 +248,42 @@ button {
   border: none;
   outline: none;
 }
+
+.carousel-img {
+  width: 50%;
+  margin: auto;
+  height: 240px;
+  object-fit: cover;
+  border-radius: 20px;
+}
+.table-modal-body {
+  background-color: #f7f8fa;
+}
+
+.n-carousel .n-carousel__arrow-group {
+  position: static;
+}
+
+.n-carousel.n-carousel--bottom .n-carousel__arrow-group > * {
+  margin-right: 12px;
+  position: absolute;
+  color: #000;
+  top: 47%;
+  font-size: 43px;
+  width: 41px;
+  right: 57px;
+}
+.n-carousel.n-carousel--bottom .n-carousel__arrow-group > *:first-child {
+  left: 57px;
+}
+.n-modal {
+  border-radius: 18px !important;
+}
+
+.second-btn {
+  transition: 0.2s all;
+}
+.second-btn:hover {
+  background-color: #cccccc70;
+  border-radius: 8px;
+}

@@ -10,7 +10,11 @@
 
     <!-- main input  -->
     <div class="mt-3">
-      <n-input v-model:value="value" :type="inputType" :placeholder="placeholder" />
+      <n-input
+        v-model:value="value"
+        :type="inputType"
+        :placeholder="placeholder"
+      />
     </div>
 
     <!-- validation text  -->
@@ -18,7 +22,7 @@
       <span>
         <i class="fa-solid fa-circle-exclamation"></i>
       </span>
-      <span class="mx-3 text"> {{ validationText  }} </span>
+      <span class="mx-3 text"> {{ validationText }} </span>
     </div>
   </div>
 </template>
@@ -37,11 +41,11 @@ export default {
     validationText: String,
   },
   setup(props) {
-      const value = ref("");
+    const value = ref("");
 
-      return {
-        value
-      }
+    return {
+      value,
+    };
   },
 };
 </script>
@@ -78,7 +82,7 @@ export default {
       position: relative;
       font-size: 13px;
       color: #09101d;
-      font-weight: 600;
+      font-weight: 500;
       .fa-star-of-life {
         font-size: 6px;
         position: absolute;

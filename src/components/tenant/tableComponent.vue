@@ -25,7 +25,7 @@
             <span class="mx-3">DISCOUNT</span>
             <i class="fa-solid fa-chevron-down"></i>
           </th>
-          <th class="flex items-center border border-r-0 boder-l-0">
+          <th class="border">
             <span class="mx-3"> DATE </span>
             <i class="fa-solid fa-chevron-down"></i>
           </th>
@@ -47,15 +47,15 @@
             :class="{ 'pl-0': item.type == 'dropdown' }"
             v-for="(item, index) in items"
             :key="index"
-            @click="checkCellType(item.editable, index)"
+            @click="checkCellType(item.editable, index, item.type)"
           >
             <span
               v-if="isCellClicked[index]"
               :class="{ 'dropdown-cell': item.type == 'dropdown' }"
             >
               {{ item.name }}
-              <!-- <img :src="item.name" alt="" /> -->
             </span>
+            <img :src="item.name" alt="" v-if="item.type == 'image'" />
 
             <section v-if="!isCellClicked[index]">
               <!-- input text  -->
@@ -92,6 +92,68 @@
                   {{ item.name }}
                 </n-select>
               </div>
+
+              <!-- carousel  -->
+              <n-modal v-if="item.type == 'image'" v-model:show="showModal">
+                <n-card
+                  style="width: 730px"
+                  :bordered="true"
+                  size="huge"
+                  role="dialog"
+                  aria-modal="true"
+                >
+                  <!-- header  -->
+                  <section
+                    class="relative flex justify-between px-5 pb-4 modal-header"
+                  >
+                    <h5 class="flex items-center text-base font-bold">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="32"
+                        height="32"
+                        viewBox="0 0 32 32"
+                        fill="none"
+                      >
+                        <path
+                          d="M26.6667 0H5.33333C3.91885 0 2.56229 0.561903 1.5621 1.5621C0.561903 2.56229 0 3.91885 0 5.33333V26.6667C0 28.0812 0.561903 29.4377 1.5621 30.4379C2.56229 31.4381 3.91885 32 5.33333 32H26.6667C28.0812 32 29.4377 31.4381 30.4379 30.4379C31.4381 29.4377 32 28.0812 32 26.6667V5.33333C32 3.91885 31.4381 2.56229 30.4379 1.5621C29.4377 0.561903 28.0812 0 26.6667 0ZM8.88889 7.11111C9.41631 7.11111 9.93188 7.26751 10.3704 7.56053C10.8089 7.85354 11.1507 8.27002 11.3526 8.75729C11.5544 9.24456 11.6072 9.78074 11.5043 10.298C11.4014 10.8153 11.1474 11.2905 10.7745 11.6634C10.4016 12.0363 9.92641 12.2903 9.40913 12.3932C8.89185 12.4961 8.35567 12.4433 7.8684 12.2415C7.38113 12.0396 6.96465 11.6978 6.67164 11.2593C6.37862 10.8208 6.22222 10.3052 6.22222 9.77778C6.22222 9.07053 6.50317 8.39226 7.00327 7.89216C7.50337 7.39206 8.18165 7.11111 8.88889 7.11111ZM28.4444 26.3644C28.4837 26.8758 28.3186 27.3819 27.9854 27.7718C27.6522 28.1617 27.1779 28.4036 26.6667 28.4444H5.33333L18.7911 16.32C19.0171 16.1139 19.3119 15.9996 19.6178 15.9996C19.9236 15.9996 20.2185 16.1139 20.4444 16.32L28.4444 24.2844V26.3644Z"
+                          fill="#3A8352"
+                        />
+                      </svg>
+
+                      <span class="mx-3 text-base font-bold">
+                        Image Name.png
+                      </span>
+                    </h5>
+
+                    <div class="flex justify-end close-modal">
+                      <button @click="showModal = false">
+                        <i class="fa-solid fa-x"></i>
+                      </button>
+                    </div>
+                  </section>
+
+                  <section class="py-10 table-modal-body">
+                    <n-carousel show-arrow>
+                      <img
+                        class="carousel-img"
+                        src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel1.jpeg"
+                      />
+                      <img
+                        class="carousel-img"
+                        src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel2.jpeg"
+                      />
+                      <img
+                        class="carousel-img"
+                        src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel3.jpeg"
+                      />
+                      <img
+                        class="carousel-img"
+                        src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel4.jpeg"
+                      />
+                    </n-carousel>
+                  </section>
+                </n-card>
+              </n-modal>
             </section>
           </td>
         </tr>
@@ -107,6 +169,7 @@ export default {
   name: "DeeperVisionSystemTableComponent",
   setup() {
     const selectAll = ref(false);
+    const showModal = ref(false);
     const isCellClicked = ref([true, true, true, true, true]);
 
     const items = ref([
@@ -185,10 +248,13 @@ export default {
 
     // check type
 
-    const checkCellType = (cell, index) => {
+    const checkCellType = (cell, index, type) => {
       if (cell == true) {
         console.log("done");
         isCellClicked.value[index] = false;
+        if (type == "image") {
+          showModal.value = true;
+        }
       }
     };
 
@@ -218,6 +284,7 @@ export default {
           key: "Completed",
         },
       ],
+      showModal,
     };
   },
   components: {
