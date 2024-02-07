@@ -34,23 +34,19 @@ const menuOptions = [
   // management
   {
     label: () =>
-      h(
-        RouterLink,
-        { to: { name: "home", params: { lang: "en-US" } }, class: "flex" },
-        [
-          h("img", {
-            src: "/src/assets/imgs/business-time.svg",
-            class: "h-5 w-5 mr-2",
-          }),
-          h(
-            "span",
-            {
-              class: "nav-item ",
-            },
-            "Managent"
-          ),
-        ]
-      ),
+      h("div", { class: "flex" }, [
+        h("img", {
+          src: "/src/assets/imgs/business-time.svg",
+          class: "h-5 w-5 mr-2",
+        }),
+        h(
+          "span",
+          {
+            class: "nav-item ",
+          },
+          "Managent"
+        ),
+      ]),
     key: "Dance Dance Dance",
     children: [
       {
@@ -220,6 +216,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+.n-submenu {
+  position: relative !important;
+}
 .n-menu .n-menu-item-content .n-menu-item-content__arrow {
   color: #3a8352;
   font-size: 20px;

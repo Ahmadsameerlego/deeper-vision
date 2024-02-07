@@ -5,7 +5,7 @@
       <h1 class="text-2xl font-bold">Logo Here</h1>
     </div>
     <!-- info  -->
-    <div class="flex admin-info">
+    <div class="flex admin-info" @click="showProfileDropdown = !showProfileDropdown">
       <div class="mr-5 admin-image">
         <img
           src="../../assets/imgs/profile.jpg"
@@ -32,55 +32,115 @@
           <span class="text-xs font-semibold text-slate-400">Admin</span>
         </div>
 
-        <!-- profile dropdown  -->
-        <div class="px-4 py-3 bg-white rounded-md profile-dropdown">
-          <!-- top  -->
-          <div class="flex items-center justify-between">
-            <div class="profile-image">
-              <img src="/src/assets/imgs/profile.jpg" alt="profile image" />
-            </div>
+        <transition>
+            <!-- profile dropdown  -->
+            <div class="px-4 py-3 bg-white rounded-md profile-dropdown" v-if="showProfileDropdown">
+              <!-- top  -->
+              <div class="flex items-center justify-between">
+                <div class="flex">
+                  <div class="profile-image">
+                    <img src="/src/assets/imgs/profile.jpg" alt="profile image" />
+                  </div>
 
-            <div>
-              <div>
-                <span class="text-base font-bold username"
-                  >User Name Here
-                </span>
+                  <div class="mx-2">
+                    <div class="h-5 mb-0">
+                      <span class="text-base font-bold username"
+                        >User Name Here
+                      </span>
+                    </div>
+                    <div>
+                      <span class="text-base font-bold text-slate-400 role"
+                        >Admin
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="drop-role">Super</div>
               </div>
-              <div>
-                <span class="text-base font-bold text-slate-400 role"
-                  >Admin
-                </span>
+              <!-- actions  -->
+              <div class="mt-2 drop-actions">
+                <button
+                  class="flex items-center justify-between w-full py-2 single-action"
+                >
+                  <div>
+                    <span class="font-semibold text-md action-item">Language</span>
+                  </div>
+
+                  <div class="flex items-center">
+                    <div>
+                      <img src="/src/assets/imgs/en.svg" alt="" />
+                    </div>
+                    <div class="mx-2">
+                      <span class="text-xs font-bold">English</span>
+                    </div>
+                  </div>
+                </button>
+
+                <router-link
+                  to="/"
+                  class="flex items-center justify-between w-full py-2 single-action"
+                >
+                  <div>
+                    <span class="font-semibold text-md action-item"
+                      >Account Setting</span
+                    >
+                  </div>
+
+                  <div class="flex items-center">
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </div>
+                </router-link>
+
+                <router-link
+                  to="/"
+                  class="flex items-center justify-between w-full py-2 single-action"
+                >
+                  <div>
+                    <span class="font-semibold text-md action-item">Sign out</span>
+                  </div>
+
+                  <div class="flex items-center">
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </div>
+                </router-link>
               </div>
             </div>
-            <div class="drop-role">Super</div>
-          </div>
-        </div>
+        </transition>
+        
+        
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { ref } from 'vue';
 export default {
   name: "DeeperVisionSystemHeaderComponent",
+  setup() {
+    const showProfileDropdown = ref(false);
 
-  data() {
-    return {};
-  },
-
-  mounted() {},
-
-  methods: {},
+    return {
+      showProfileDropdown
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 .profile-dropdown {
   position: absolute;
-  width: 215px;
+  width: 250px;
   right: 0;
-  top: 55px;
+  top: 65px;
   right: -22px;
+  box-shadow: 0px 0px 10px #3333332c;
+  .drop-actions {
+    .action-item,
+    .fa-chevron-right {
+      color: #615e83;
+    }
+  }
   .username {
     font-size: 12px;
     font-weight: 700;
@@ -92,8 +152,8 @@ export default {
     font-weight: 600;
   }
   .profile-image {
-    width: 30px;
-    height: 30px;
+    width: 37px;
+    height: 37px;
     border-radius: 50%;
     border: 2px solid #3a8352;
     img {
@@ -118,6 +178,7 @@ export default {
 }
 .admin-info {
   position: relative;
+  cursor: pointer;
   .admin-image {
     border-radius: 50%;
   }
