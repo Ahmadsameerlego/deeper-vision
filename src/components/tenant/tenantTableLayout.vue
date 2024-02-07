@@ -66,7 +66,7 @@
         </div>
 
         <!-- group  -->
-        <div class="relative filter">
+        <!-- <div class="relative filter">
           <n-button class="h-12 pt-3 pb-3 bg-white rounded-lg px-9 main-table">
             Group By
           </n-button>
@@ -90,9 +90,9 @@
               </clipPath>
             </defs>
           </svg>
-        </div>
+        </div> -->
 
-        <div class="ml-14 remove-selected">
+        <div class="ml-6 remove-selected">
           <!-- remove selected  -->
           <n-button class="rounded-md">
             <span><i class="fa-regular fa-trash-can"></i></span>
@@ -100,24 +100,46 @@
           </n-button>
         </div>
       </div>
+
+      <div class="ml-6 add-new">
+        <!-- Add new  -->
+        <n-button
+          class="rounded-md"
+          click="handleConfirm"
+          @click="showModal = true"
+        >
+          <span><i class="fa-solid fa-plus"></i></span>
+          <span class="ml-2">Add New</span>
+        </n-button>
+      </div>
+
+      <!-- add new dialog  -->
+      <n-modal v-model:show="showModal">
+        <dialog-content @close="showModal = false" />
+      </n-modal>
     </div>
   </section>
 </template>
 
 <script>
-import { NInput, NButton } from "naive-ui";
+import { NInput, NButton, NModal } from "naive-ui";
 import { ref } from "vue";
 import filterHideVue from "../filters/filterHide.vue";
 import filterGroupVue from "../filters/filterGroup.vue";
-
+import dialogContent from "../assets/dialogContent.vue";
 export default {
   name: "DeeperVisionSystemTenantTableLayout",
   setup() {
     const showGroupFilter = ref(false);
     const showHideFilter = ref(false);
+
+    const showModal = ref(false);
+
+    // const dialog = useDialog();
     return {
       showGroupFilter,
       showHideFilter,
+      showModal,
     };
   },
   components: {
@@ -125,6 +147,8 @@ export default {
     NButton,
     filterGroupVue,
     filterHideVue,
+    NModal,
+    dialogContent,
   },
 };
 </script>
@@ -168,7 +192,8 @@ export default {
   width: 200px;
 }
 .filter-section {
-  .remove-selected {
+  .remove-selected,
+  .add-new {
     button {
       background-color: #3a8352;
       border-radius: 10px !important;
@@ -213,12 +238,15 @@ export default {
   position: absolute;
   top: 55px;
   min-width: 700px;
+  z-index: 999;
+  box-shadow: 0px 0px 10px #3333332d;
 }
 .hide-filter {
   position: absolute;
   top: 55px;
   min-width: 370px;
   right: 0;
+  z-index: 99;
+  box-shadow: 0px 0px 10px #3333332d;
 }
-
 </style>

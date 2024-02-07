@@ -29,6 +29,10 @@
             <span class="mx-3"> DATE </span>
             <i class="fa-solid fa-chevron-down"></i>
           </th>
+          <th class="flex items-center border border-r-0 boder-l-0">
+            <span class="mx-3"> Image </span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </th>
         </tr>
       </thead>
       <!-- tbody  -->
@@ -50,6 +54,7 @@
               :class="{ 'dropdown-cell': item.type == 'dropdown' }"
             >
               {{ item.name }}
+              <!-- <img :src="item.name" alt="" /> -->
             </span>
 
             <section v-if="!isCellClicked[index]">
@@ -151,6 +156,16 @@ export default {
         checked: false,
         editable: true,
         type: "dropdown",
+      },
+      {
+        name: "/src/assets/imgs/en.svg",
+        subscriptionCount: 4,
+        mainPrice: 100,
+        discount: "90%",
+        date: "Dec 12, 2023",
+        checked: false,
+        editable: true,
+        type: "image",
       },
     ]);
 

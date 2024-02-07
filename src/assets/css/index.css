@@ -89,10 +89,7 @@ body {
     width: 15px !important;
     height: 15px !important;
   }
-  #sidebar
-    .n-submenu-children
-    .n-menu-item-content-header
-    .dropdown-item {
+  #sidebar .n-submenu-children .n-menu-item-content-header .dropdown-item {
     font-size: 11px !important;
   }
   #sidebar .n-submenu-children .n-menu-item-content {
@@ -236,4 +233,18 @@ body {
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #0000000f;
+}
+.main-btn {
+  border-radius: 10px;
+  border: 2px solid #3a8352;
+  background: #3a8352;
+  color: #fff;
+}
+button {
+  border: none;
+  outline: none;
 }
