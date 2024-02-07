@@ -55,7 +55,35 @@
             >
               {{ item.name }}
             </span>
-            <img :src="item.name" alt="" v-if="item.type == 'image'" />
+
+            <!-- image input  -->
+            <div v-if="item.type == 'image'">
+              <input
+                type="file"
+                class="upload-images"
+                @change="handleFileChange"
+                multiple
+              />
+              <img
+                src="/src/assets/imgs/upload.svg"
+                alt=""
+                v-if="imagePreviews.length == 0"
+              />
+
+              <!-- uploaded images  -->
+              <div class="uploaded-images" v-if="imagePreviews.length > 0">
+                <div
+                  class="image-preview"
+                  v-for="(image, index) in imagePreviews"
+                  :key="index"
+                >
+                  <img :src="image" alt="Preview" />
+                  <button class="remove-image" @click="removeImage(index)">
+                    x
+                  </button>
+                </div>
+              </div>
+            </div>
 
             <section v-if="!isCellClicked[index]">
               <!-- input text  -->
@@ -64,6 +92,7 @@
                 type="text"
                 v-if="item.type == 'text'"
                 @blur="isCellClicked[index] = true"
+                autofocus
               />
               <!-- input number  -->
               <n-input
@@ -71,12 +100,14 @@
                 type="number"
                 v-if="item.type == 'number'"
                 @blur="isCellClicked[index] = true"
+                autofocus
               />
               <!-- date picker  -->
               <div class="" v-if="item.type == 'date'">
                 <n-date-picker
                   v-model:value="item.name"
                   type="date"
+                  @focus="true"
                   @update:value="isCellClicked[index] = true"
                 />
               </div>
@@ -121,7 +152,7 @@
                       </svg>
 
                       <span class="mx-3 text-base font-bold">
-                        Image Name.png
+                        {{ activeImageName }}
                       </span>
                     </h5>
 
@@ -135,20 +166,10 @@
                   <section class="py-10 table-modal-body">
                     <n-carousel show-arrow>
                       <img
+                        v-for="(image, index) in imagePreviews"
+                        :key="index"
                         class="carousel-img"
-                        src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel1.jpeg"
-                      />
-                      <img
-                        class="carousel-img"
-                        src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel2.jpeg"
-                      />
-                      <img
-                        class="carousel-img"
-                        src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel3.jpeg"
-                      />
-                      <img
-                        class="carousel-img"
-                        src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel4.jpeg"
+                        :src="image"
                       />
                     </n-carousel>
                   </section>
@@ -171,6 +192,9 @@ export default {
     const selectAll = ref(false);
     const showModal = ref(false);
     const isCellClicked = ref([true, true, true, true, true]);
+
+    const imagePreviews = ref([]);
+    const activeImageName = ref("");
 
     const items = ref([
       {
@@ -252,10 +276,38 @@ export default {
       if (cell == true) {
         console.log("done");
         isCellClicked.value[index] = false;
-        if (type == "image") {
+        if (type == "image" && imagePreviews.value.length > 0) {
           showModal.value = true;
         }
       }
+    };
+
+    // upload images
+    const handleFileChange = (event) => {
+      const files = event.target.files;
+      if (!files) return;
+
+      // Clear previous previews
+      imagePreviews.value = [];
+
+      // Loop through selected files
+      for (let i = 0; i < files.length; i++) {
+        const reader = new FileReader();
+
+        // Read file as a data URL and push to imagePreviews
+        reader.onload = (e) => {
+          imagePreviews.value.push(e.target.result);
+        };
+
+        // Read the file
+        reader.readAsDataURL(files[i]);
+      }
+      activeImageName.value = files[0].name;
+    };
+
+    // remove image
+    const removeImage = (index) => {
+      imagePreviews.value.splice(index, 1);
     };
 
     // ===== mounted ============
@@ -285,6 +337,10 @@ export default {
         },
       ],
       showModal,
+      imagePreviews,
+      handleFileChange,
+      removeImage,
+      activeImageName,
     };
   },
   components: {
@@ -367,5 +423,40 @@ table th {
       opacity: 1;
     }
   }
+}
+
+.image-preview {
+  display: inline-block;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.image-preview img {
+  width: 28px;
+  height: 28px;
+  object-fit: cover;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.remove-image {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #ce1126;
+  color: #fff;
+  position: absolute;
+  top: 1px;
+  right: 0px;
+  font-size: 9px;
+  text-align: center;
+}
+.upload-images {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
 }
 </style>
