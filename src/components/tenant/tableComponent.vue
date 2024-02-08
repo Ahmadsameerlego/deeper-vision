@@ -224,13 +224,13 @@
 
                     <form>
                       <div class="grid grid-cols-1 gap-4 mt-4">
-                        <inputLayout
+                        <!-- <inputLayout
                           inputName="Add your notes here"
                           placeholder="Add description"
                           inputType="textarea"
                           validationText="noText"
                           isValidTextExist="false"
-                        />
+                        /> -->
                       </div>
                     </form>
                   </section>
@@ -269,7 +269,7 @@
 <script>
 import { ref, onMounted } from "vue";
 import { NCheckbox, NInput, NDatePicker, NSelect } from "naive-ui";
-import inputLayout from "../assets/inputlayout.vue";
+// import inputLayout from "../assets/inputlayout.vue";
 
 export default {
   name: "DeeperVisionSystemTableComponent",
@@ -445,7 +445,7 @@ export default {
     NInput,
     NDatePicker,
     NSelect,
-    inputLayout,
+    // inputLayout,
   },
 };
 </script>
