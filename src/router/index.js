@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import home from "../views/index.vue";
 import tenant from "../views/tenant/TenantView.vue";
-import projects from "../views/ProjectsView.vue"
+import projects from "../views/ProjectsView.vue";
+import profile from "../views/profileView.vue"
 const routes = [
   {
     path: "/",
@@ -23,6 +24,12 @@ const routes = [
     path: "/projects",
     name: "projects",
     component: projects,
+  },
+
+  {
+    path: "/profile",
+    name: "profile",
+    component: profile,
   },
 ];
 const router = createRouter({

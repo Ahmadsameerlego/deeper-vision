@@ -3,7 +3,9 @@
     <!-- label  -->
     <label for="" class="mx-3">
       <span class="label-text">
-        {{ inputName }}
+        <span class="px-1">
+          {{ inputName }}
+        </span>
         <i class="text-red-600 fa-solid fa-star-of-life"></i>
       </span>
     </label>
@@ -85,7 +87,7 @@ export default {
         font-size: 6px;
         position: absolute;
         top: 4px;
-        right: -25%;
+        right: -22%;
       }
     }
   }

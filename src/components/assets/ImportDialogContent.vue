@@ -40,7 +40,7 @@
             inputType="text"
             validationText="This is a message"
             :placeholder="placeholderText"
-            fileType=".svc"
+            fileType=".csv"
             @setFileName="setName"
           />
         </div>
@@ -100,7 +100,7 @@
           <span>
             <i class="fa-solid fa-arrow-left-long"></i>
           </span>
-          <span class="mx-3"> back </span>
+          <span class="mx-3"> Back </span>
         </button>
 
         <button class="px-5 py-2 mx-3 main-btn">
