@@ -9,12 +9,24 @@
     </label>
 
     <!-- main input  -->
-    <div class="mt-3">
+    <div class="relative mt-3">
       <n-input
         v-model:value="value"
         :type="inputType"
         :placeholder="placeholder"
-      />
+        :disabled="!active"
+      >
+      </n-input>
+      <!-- file input  -->
+      <div class="file-upload">
+        <span>Upload File</span>
+        <input
+          type="file"
+          class="layout-file-input"
+          @change="uploadfile"
+          :accept="fileType"
+        />
+      </div>
     </div>
 
     <!-- validation text  -->
@@ -43,42 +55,24 @@ export default {
     },
     validationText: String,
     isValidTextExist: String,
+    fileType: String,
   },
-  setup(props) {
+  setup(props, context) {
     const value = ref("");
+
+    const uploadfile = (e) => {
+      context.emit("setFileName", e.target.files[0].name);
+    };
 
     return {
       value,
+      uploadfile,
     };
   },
 };
 </script>
 
-<style lang="scss">
-.input-layout {
-  .n-input,
-  .n-input .n-input__input-el {
-    height: 50px;
-    border-radius: 8px;
-
-    .n-input__placeholder {
-      color: #09101d !important;
-      font-size: 15px;
-      font-weight: 500;
-    }
-  }
-
-  .validation-text {
-    border-radius: 8px;
-    background: #ebeef2;
-    .text {
-      color: #394452;
-      font-size: 12px;
-      font-weight: 600;
-    }
-  }
-}
-</style>
+<style lang="scss"></style>
 <style lang="scss" scoped>
 .input-layout {
   label {
@@ -95,5 +89,26 @@ export default {
       }
     }
   }
+}
+.file-upload,
+.layout-file-input {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 110px;
+  height: 100%;
+}
+.layout-file-input {
+  opacity: 0;
+}
+.file-upload {
+  border-radius: 6px;
+  background: rgba(133, 140, 148, 0.47);
+  color: #615e83;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

@@ -287,3 +287,11 @@ button {
   background-color: #cccccc70;
   border-radius: 8px;
 }
+.close-modal {
+  position: absolute;
+  right: 40px;
+  top: 0px;
+  font-size: 20px;
+  font-size: 17px;
+}
+

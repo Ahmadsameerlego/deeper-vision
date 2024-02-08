@@ -29,8 +29,13 @@
             <span class="mx-3"> DATE </span>
             <i class="fa-solid fa-chevron-down"></i>
           </th>
-          <th class="flex items-center border border-r-0 boder-l-0">
+          <th class="border">
             <span class="mx-3"> Image </span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </th>
+
+          <th class="flex items-center border border-r-0 boder-l-0">
+            <span class="mx-3"> TextArea </span>
             <i class="fa-solid fa-chevron-down"></i>
           </th>
         </tr>
@@ -61,7 +66,7 @@
               <input
                 type="file"
                 class="upload-images"
-                @change="handleFileChange"
+                @change.stop="handleFileChange"
                 multiple
               />
               <img
@@ -71,18 +76,33 @@
               />
 
               <!-- uploaded images  -->
-              <div class="uploaded-images" v-if="imagePreviews.length > 0">
+              <div class="flex uploaded-images" v-if="imagePreviews.length > 0">
+                <div class="relative mx-2">
+                  <input
+                    type="file"
+                    class="upload-images"
+                    @change.stop="handleFileChange"
+                    multiple
+                  />
+                  <img src="/src/assets/imgs/upload.svg" alt="" />
+                </div>
                 <div
                   class="image-preview"
-                  v-for="(image, index) in imagePreviews"
+                  v-for="(image, index) in imagePreviews.slice(0, 5)"
                   :key="index"
                 >
                   <img :src="image" alt="Preview" />
-                  <button class="remove-image" @click="removeImage(index)">
+                  <button class="remove-image" @click.stop="removeImage(index)">
                     x
                   </button>
                 </div>
               </div>
+            </div>
+
+            <div v-if="item.type == 'textarea'">
+              <span @click="showTextAreaModal = true">
+                {{ item.name }}
+              </span>
             </div>
 
             <section v-if="!isCellClicked[index]">
@@ -175,6 +195,69 @@
                   </section>
                 </n-card>
               </n-modal>
+
+              <!-- text area  -->
+              <n-modal
+                v-if="item.type == 'textarea'"
+                v-model:show="showTextAreaModal"
+              >
+                <n-card
+                  style="width: 730px"
+                  :bordered="true"
+                  size="huge"
+                  role="dialog"
+                  aria-modal="true"
+                >
+                  <!-- header  -->
+                  <section class="relative pb-4 modal-header border-bottom">
+                    <h5 class="font-bold text-center">Edit Notes</h5>
+
+                    <div class="flex justify-end close-modal">
+                      <button @click="showTextAreaModal = false">
+                        <i class="fa-solid fa-x"></i>
+                      </button>
+                    </div>
+                  </section>
+
+                  <section class="py-9 modal-body border-bottom px-7">
+                    <h4 class="font-bold">Fill in these inputs</h4>
+
+                    <form>
+                      <div class="grid grid-cols-1 gap-4 mt-4">
+                        <inputLayout
+                          inputName="Add your notes here"
+                          placeholder="Add description"
+                          inputType="textarea"
+                          validationText="noText"
+                          isValidTextExist="false"
+                        />
+                      </div>
+                    </form>
+                  </section>
+
+                  <!-- footer  -->
+                  <section class="pb-0 mt-3 modal-footer px-7">
+                    <div class="flex justify-end">
+                      <button
+                        class="flex items-center px-5 py-2 second-btn"
+                        @click="showTextAreaModal = false"
+                      >
+                        <span>
+                          <i class="fa-solid fa-arrow-left-long"></i>
+                        </span>
+                        <span class="mx-3"> Cancel </span>
+                      </button>
+
+                      <button class="px-5 py-2 mx-3 main-btn">
+                        <span class="mx-3"> Save </span>
+                        <span>
+                          <i class="fa-solid fa-arrow-right-long"></i>
+                        </span>
+                      </button>
+                    </div>
+                  </section>
+                </n-card>
+              </n-modal>
             </section>
           </td>
         </tr>
@@ -186,11 +269,14 @@
 <script>
 import { ref, onMounted } from "vue";
 import { NCheckbox, NInput, NDatePicker, NSelect } from "naive-ui";
+import inputLayout from "../assets/inputlayout.vue";
+
 export default {
   name: "DeeperVisionSystemTableComponent",
   setup() {
     const selectAll = ref(false);
     const showModal = ref(false);
+    const showTextAreaModal = ref(false);
     const isCellClicked = ref([true, true, true, true, true]);
 
     const imagePreviews = ref([]);
@@ -254,6 +340,16 @@ export default {
         editable: true,
         type: "image",
       },
+      {
+        name: "Lorem Ipsum is simply dummy and typesetting industry ",
+        subscriptionCount: 4,
+        mainPrice: 100,
+        discount: "90%",
+        date: "Dec 12, 2023",
+        checked: false,
+        editable: true,
+        type: "textarea",
+      },
     ]);
 
     // ========== methods ============
@@ -288,7 +384,7 @@ export default {
       if (!files) return;
 
       // Clear previous previews
-      imagePreviews.value = [];
+      // imagePreviews.value = [];
 
       // Loop through selected files
       for (let i = 0; i < files.length; i++) {
@@ -341,6 +437,7 @@ export default {
       handleFileChange,
       removeImage,
       activeImageName,
+      showTextAreaModal,
     };
   },
   components: {
@@ -348,6 +445,7 @@ export default {
     NInput,
     NDatePicker,
     NSelect,
+    inputLayout,
   },
 };
 </script>
@@ -446,10 +544,13 @@ table th {
   background-color: #ce1126;
   color: #fff;
   position: absolute;
-  top: 1px;
+  top: 0px;
   right: 0px;
-  font-size: 9px;
+  font-size: 7px;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .upload-images {
   position: absolute;

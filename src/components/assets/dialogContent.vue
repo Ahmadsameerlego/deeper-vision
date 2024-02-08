@@ -108,13 +108,6 @@ export default {
   .h5 {
     font-size: 15px;
   }
-  .close-modal {
-    position: absolute;
-    right: 40px;
-    top: 0px;
-    font-size: 20px;
-    font-size: 17px;
-  }
 }
 .modal-body {
   h4 {
